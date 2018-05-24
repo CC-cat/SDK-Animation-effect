@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>关闭当前窗口并打开新窗口</title>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	._btn li {
+		width: 300px;
+		padding: 4px;
+		margin: 4px auto;
+		cursor: pointer;
+	}
+
+	._btn li:hover {
+		background-color: #eee;
+	}
+	</style>
+</head>
+<body>
+	<ul class="_btn">
+		<li page="page1.html">page1</li>
+		<li page="index.html">index</li>
+	</ul>
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var url = window.location.pathname;
+	    url = url.substring(url.lastIndexOf('/') + 1, url.length);
+	    // url = index.hrml
+
+	    $("._btn li").on("click", function(){
+	    	var index = $(this).index();
+
+				if ($(this).attr("page") != url) {
+
+	        var _arrLink = ['page1','index'];
+
+	        // ------- 关闭当前窗口并打开新窗口 ----------
+	        closeWindow(_arrLink[index]+".html");
+				};
+	    });
+
+	  });
+
+		function closeWindow(url){
+		 // window.open(url);
+		 window.opener=null;
+		 window.open(url,'_blank');
+		 window.close();
+		};
+	</script>
+</body>
+</html>
