@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>录制视频</title>
+</head>
+<body>
+<div>
+	<video id="thevideo" autoplay></video>
+</div>
+
+<script>
+	window.addEventListener("load",eventWindowLoaded,false);
+	function userMediaSupported(){
+		return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+	}
+	function eventWindowLoaded(){
+		if(userMediaSupported()){
+			startVideo();
+		}else{
+			alert("getUserMedia() Not Supported");
+		}
+	}
+	function startVideo(){
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+		navigator.getUserMedia({video:true,audio:true},mediaSuccess,mediaFail);
+	}
+
+	function mediaSuccess(userMedia){
+		window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+		var video = document.getElementById("thevideo");
+		video.src = window.URL.createObjectURL(userMedia);
+		video.onloadedmetadata = doCoolStuff;
+	}
+	function mediaFail(){
+		alert("Failed To get user media:"+error.code);
+	}
+	function doCoolStuff(){
+		alert("Do Cool Stuff");
+	}
+</script>
+</body>
+</html>
